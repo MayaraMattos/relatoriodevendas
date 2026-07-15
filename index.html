@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Sell-Out · Mars Petcare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0F1E3D;
+    --navy-2: #16294F;
+    --yellow: #FFC72C;
+    --yellow-deep: #E8AC00;
+    --paper: #FBF8F2;
+    --paper-2: #F3EFE4;
+    --slate: #6B7280;
+    --line: #E2DFD5;
+    --white: #FFFFFF;
+    --good: #2F8F5B;
+    --bad: #C24444;
+
+    --c-optimum: #1F6F5C;
+    --c-whiskas: #E8752C;
+    --c-dreamies: #8B5CF6;
+    --c-biscrok: #D9A441;
+    --c-tasty: #E0604A;
+    --c-dentastix: #3E8FC1;
+    --c-outro: #8A8F98;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--paper);
+    color: var(--navy);
+    padding: 28px 20px 60px;
+    min-height: 100vh;
+  }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; }
+
+  h1,h2,h3, .display{ font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 16px; padding-bottom: 22px; margin-bottom: 26px;
+    border-bottom: 2px solid var(--navy);
+    flex-wrap: wrap;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .brand svg{ flex-shrink:0; }
+  .eyebrow{
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--slate); font-weight:600; margin-bottom: 2px;
+  }
+  h1{ font-size: 26px; font-weight: 700; color: var(--navy); line-height:1.1; }
+  #hoje{ font-size:13px; color:var(--slate); font-weight:500; }
+  .header-right{ text-align:right; }
+
+  /* ---------- Layout ---------- */
+  .grid{ display:grid; grid-template-columns: 340px 1fr; gap: 24px; align-items:start; }
+  @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
+
+  .panel{
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .panel + .panel{ margin-top: 20px; }
+
+  .panel h2{
+    font-size: 15px; font-weight:600; color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .panel .sub{ font-size:12.5px; color:var(--slate); margin-bottom:16px; }
+
+  /* ---------- Form (nota de pedido style) ---------- */
+  .field{ margin-bottom: 14px; }
+  .field label{
+    display:block; font-size: 11.5px; font-weight:600; color: var(--slate);
+    text-transform: uppercase; letter-spacing:.04em; margin-bottom:6px;
+  }
+  .field input, .field select{
+    width:100%; padding: 10px 12px; font-size: 14px;
+    border: 1.5px solid var(--line); border-radius: 6px;
+    background: var(--paper); color: var(--navy); font-family: inherit;
+  }
+  .field input:focus, .field select:focus{
+    outline:none; border-color: var(--navy);
+  }
+  .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+
+  .total-preview{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding: 12px 14px; background: var(--paper-2); border-radius: 6px;
+    margin-bottom: 16px; border: 1px dashed var(--line);
+  }
+  .total-preview span:first-child{ font-size:12px; color:var(--slate); font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .total-preview span:last-child{ font-size: 19px; font-weight:600; }
+
+  button{ cursor:pointer; font-family:inherit; border:none; }
+  .btn-primary{
+    width:100%; padding: 12px; background: var(--yellow); color: var(--navy);
+    font-weight:700; font-size:14px; border-radius:6px;
+    transition: background .15s ease;
+  }
+  .btn-primary:hover{ background: var(--yellow-deep); }
+  .btn-primary:disabled{ background:#EDE3C4; color:#A8A18A; cursor:not-allowed; }
+
+  .btn-ghost{
+    padding: 9px 14px; background: transparent; color: var(--navy);
+    font-weight:600; font-size:13px; border:1.5px solid var(--navy); border-radius:6px;
+  }
+  .btn-ghost:hover{ background: var(--navy); color: var(--white); }
+
+  .btn-text{
+    background:none; color:var(--slate); font-size:12.5px; text-decoration:underline;
+  }
+  .btn-text:hover{ color: var(--bad); }
+
+  /* ---------- Summary cards ---------- */
+  .cards{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  @media (max-width: 700px){ .cards{ grid-template-columns: repeat(2, 1fr); } }
+  .card{
+    background: var(--navy); color: var(--white);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .card:nth-child(2){ background: var(--navy-2); }
+  .card:nth-child(3){ background: var(--navy); }
+  .card:nth-child(4){ background: var(--navy-2); }
+  .card .k{ font-size: 10.5px; text-transform:uppercase; letter-spacing:.08em; color: var(--yellow); font-weight:700; margin-bottom:8px; }
+  .card .v{ font-size: 21px; font-weight:700; font-family:'JetBrains Mono', monospace; }
+  .card .v2{ font-size: 14px; font-weight:600; margin-top:2px; }
+
+  /* ---------- Shelf chart (signature) ---------- */
+  .shelf-row{ margin-bottom: 16px; }
+  .shelf-label{
+    display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:6px;
+  }
+  .shelf-label .val{ font-family:'JetBrains Mono', monospace; color: var(--slate); font-weight:500; font-size:12.5px; }
+  .shelf-bar{
+    position:relative; height: 22px; background: var(--paper-2);
+    border-radius: 3px; overflow:hidden; display:flex;
+    border-bottom: 3px solid var(--navy);
+  }
+  .shelf-seg{ height:100%; }
+  .legend{ display:flex; flex-wrap:wrap; gap: 10px 18px; margin-top: 14px; padding-top:14px; border-top:1px solid var(--line); }
+  .legend-item{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--slate); font-weight:500; }
+  .legend-dot{ width:10px; height:10px; border-radius:2px; display:inline-block; }
+
+  .empty{ padding: 30px 10px; text-align:center; color: var(--slate); font-size:13.5px; }
+
+  /* ---------- History table ---------- */
+  .table-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .filters{ display:flex; gap:8px; flex-wrap:wrap; }
+  .filters select, .filters input{
+    padding:7px 10px; font-size:12.5px; border:1.5px solid var(--line); border-radius:6px; background:var(--paper); font-family:inherit; color:var(--navy);
+  }
+  table{ width:100%; border-collapse: collapse; font-size: 13px; }
+  thead th{
+    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em;
+    color: var(--slate); font-weight:700; padding: 8px 10px; border-bottom: 1.5px solid var(--navy);
+  }
+  tbody td{ padding: 10px 10px; border-bottom: 1px solid var(--line); }
+  tbody tr:hover{ background: var(--paper-2); }
+  .chip{
+    display:inline-block; padding: 3px 9px; border-radius: 20px; font-size:11px; font-weight:700; color:var(--white);
+  }
+  .num{ font-family:'JetBrains Mono', monospace; text-align:right; }
+  td.num, th.num{ text-align:right; }
+
+  .actions-bar{ display:flex; justify-content:space-between; align-items:center; margin-top:18px; gap:10px; flex-wrap:wrap; }
+
+  #loading{ text-align:center; padding:60px 20px; color:var(--slate); font-size:14px; }
+
+  @media print{
+    body{ padding:0; background:white; }
+    .no-print{ display:none !important; }
+    .panel{ border:none; padding:0; }
+    .grid{ grid-template-columns: 1fr; }
+    .card{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .chip{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .shelf-seg{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+        <rect width="42" height="42" rx="8" fill="#0F1E3D"/>
+        <rect x="9" y="14" width="24" height="3" rx="1.5" fill="#FFC72C"/>
+        <rect x="9" y="20" width="16" height="3" rx="1.5" fill="#FFC72C"/>
+        <rect x="9" y="26" width="20" height="3" rx="1.5" fill="#FFC72C"/>
+      </svg>
+      <div>
+        <div class="eyebrow">Mars Petcare · Mato Grosso do Sul</div>
+        <h1>Painel de Sell-Out</h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <div id="hoje" class="mono"></div>
+    </div>
+  </header>
+
+  <div id="loading">Carregando seus dados...</div>
+
+  <div id="app" style="display:none;">
+
+    <div class="cards" id="cards"></div>
+
+    <div class="grid">
+      <!-- FORM -->
+      <div class="panel no-print">
+        <h2>Registrar venda</h2>
+        <div class="sub">Preencha após cada positivação no PDV</div>
+
+        <div class="field">
+          <label for="f-data">Data</label>
+          <input type="date" id="f-data">
+        </div>
+
+        <div class="field">
+          <label for="f-pdv">PDV (pet shop)</label>
+          <input type="text" id="f-pdv" placeholder="Ex: Dog in Box" list="pdv-list" autocomplete="off">
+          <datalist id="pdv-list"></datalist>
+        </div>
+
+        <div class="field">
+          <label for="f-marca">Marca / SKU</label>
+          <select id="f-marca">
+            <option value="Optimum">Optimum</option>
+            <option value="Whiskas Temp">Whiskas Temp</option>
+            <option value="Dreamies">Dreamies</option>
+            <option value="Biscrok">Biscrok</option>
+            <option value="Tasty Bites">Tasty Bites</option>
+            <option value="Dentastix">Dentastix</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="f-qtd">Quantidade</label>
+            <input type="number" id="f-qtd" min="1" step="1" value="1">
+          </div>
+          <div class="field">
+            <label for="f-valor">Valor unit. (R$)</label>
+            <input type="number" id="f-valor" min="0" step="0.01" placeholder="0,00">
+          </div>
+        </div>
+
+        <div class="total-preview">
+          <span>Total do item</span>
+          <span class="mono" id="f-total">R$ 0,00</span>
+        </div>
+
+        <button class="btn-primary" id="btn-add">+ Adicionar venda</button>
+      </div>
+
+      <!-- REPORT -->
+      <div>
+        <div class="panel">
+          <h2>Vendas por PDV</h2>
+          <div class="sub">Mix de marcas em cada ponto de venda (gôndola)</div>
+          <div id="shelf-chart"></div>
+        </div>
+
+        <div class="panel">
+          <div class="table-head">
+            <div>
+              <h2 style="margin-bottom:2px;">Histórico de vendas</h2>
+              <div class="sub" style="margin-bottom:0;">Todos os lançamentos salvos</div>
+            </div>
+            <div class="filters no-print">
+              <select id="filtro-pdv"><option value="">Todos os PDVs</option></select>
+              <select id="filtro-marca"><option value="">Todas as marcas</option></select>
+            </div>
+          </div>
+          <div id="history-table"></div>
+
+          <div class="actions-bar no-print">
+            <button class="btn-text" id="btn-reset">Limpar todo o histórico</button>
+            <button class="btn-ghost" id="btn-print">🖨 Baixar / imprimir relatório</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BRAND_COLORS = {
+  'Optimum': 'var(--c-optimum)',
+  'Whiskas Temp': 'var(--c-whiskas)',
+  'Dreamies': 'var(--c-dreamies)',
+  'Biscrok': 'var(--c-biscrok)',
+  'Tasty Bites': 'var(--c-tasty)',
+  'Dentastix': 'var(--c-dentastix)',
+  'Outro': 'var(--c-outro)'
+};
+const HEX = {
+  'Optimum': '#1F6F5C','Whiskas Temp':'#E8752C','Dreamies':'#8B5CF6',
+  'Biscrok':'#D9A441','Tasty Bites':'#E0604A','Dentastix':'#3E8FC1','Outro':'#8A8F98'
+};
+
+let entries = [];
+let filtroPdv = '';
+let filtroMarca = '';
+
+function fmtBRL(n){
+  return n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+}
+function fmtDate(iso){
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function uid(){ return 'e' + Date.now() + Math.random().toString(16).slice(2,7); }
+
+async function loadEntries(){
+  try{
+    const raw = localStorage.getItem('vendas:entries');
+    entries = raw ? JSON.parse(raw) : [];
+  }catch(err){
+    entries = [];
+  }
+}
+async function saveEntries(){
+  try{
+    localStorage.setItem('vendas:entries', JSON.stringify(entries));
+  }catch(err){
+    console.error('Erro ao salvar', err);
+  }
+}
+
+function setHoje(){
+  const hoje = new Date();
+  document.getElementById('hoje').textContent = hoje.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+  document.getElementById('f-data').value = hoje.toISOString().slice(0,10);
+}
+
+function updateTotalPreview(){
+  const qtd = parseFloat(document.getElementById('f-qtd').value) || 0;
+  const valor = parseFloat(document.getElementById('f-valor').value) || 0;
+  document.getElementById('f-total').textContent = fmtBRL(qtd * valor);
+}
+
+function renderCards(){
+  const totalVendido = entries.reduce((s,e)=> s + e.qtd*e.valorUnit, 0);
+  const pdvsUnicos = new Set(entries.map(e=>e.pdv.trim().toLowerCase())).size;
+  const ticketMedio = entries.length ? totalVendido / entries.length : 0;
+
+  const porMarca = {};
+  entries.forEach(e=>{ porMarca[e.marca] = (porMarca[e.marca]||0) + e.qtd*e.valorUnit; });
+  let marcaTop = '—';
+  let maxVal = -1;
+  Object.entries(porMarca).forEach(([m,v])=>{ if(v>maxVal){ maxVal=v; marcaTop=m; } });
+
+  document.getElementById('cards').innerHTML = `
+    <div class="card">
+      <div class="k">Total vendido</div>
+      <div class="v">${fmtBRL(totalVendido)}</div>
+    </div>
+    <div class="card">
+      <div class="k">Ticket médio</div>
+      <div class="v">${fmtBRL(ticketMedio)}</div>
+    </div>
+    <div class="card">
+      <div class="k">PDVs positivados</div>
+      <div class="v">${pdvsUnicos}</div>
+    </div>
+    <div class="card">
+      <div class="k">Marca destaque</div>
+      <div class="v2" style="font-family:'Space Grotesk',sans-serif;">${marcaTop}</div>
+    </div>
+  `;
+}
+
+function renderShelf(){
+  const el = document.getElementById('shelf-chart');
+  if(!entries.length){
+    el.innerHTML = `<div class="empty">Nenhuma venda registrada ainda. Adicione a primeira ao lado.</div>`;
+    return;
+  }
+  const byPdv = {};
+  entries.forEach(e=>{
+    const key = e.pdv.trim();
+    if(!byPdv[key]) byPdv[key] = {};
+    byPdv[key][e.marca] = (byPdv[key][e.marca]||0) + e.qtd*e.valorUnit;
+  });
+  const pdvTotals = Object.entries(byPdv).map(([pdv,marcas])=>{
+    const total = Object.values(marcas).reduce((a,b)=>a+b,0);
+    return { pdv, marcas, total };
+  }).sort((a,b)=> b.total - a.total);
+
+  const maxTotal = Math.max(...pdvTotals.map(p=>p.total));
+
+  let html = '';
+  pdvTotals.forEach(p=>{
+    const widthPct = maxTotal ? (p.total / maxTotal * 100) : 0;
+    let segs = '';
+    Object.entries(p.marcas).forEach(([marca, val])=>{
+      const segPct = p.total ? (val / p.total * 100) : 0;
+      segs += `<div class="shelf-seg" style="width:${segPct}%; background:${HEX[marca]||HEX['Outro']};" title="${marca}: ${fmtBRL(val)}"></div>`;
+    });
+    html += `
+      <div class="shelf-row">
+        <div class="shelf-label">
+          <span>${p.pdv}</span>
+          <span class="val">${fmtBRL(p.total)}</span>
+        </div>
+        <div class="shelf-bar" style="width:${Math.max(widthPct,8)}%;">${segs}</div>
+      </div>
+    `;
+  });
+
+  html += `<div class="legend">` + Object.keys(HEX).map(m=>
+    `<div class="legend-item"><span class="legend-dot" style="background:${HEX[m]};"></span>${m}</div>`
+  ).join('') + `</div>`;
+
+  el.innerHTML = html;
+}
+
+function populateFilterOptions(){
+  const pdvSel = document.getElementById('filtro-pdv');
+  const marcaSel = document.getElementById('filtro-marca');
+  const pdvList = document.getElementById('pdv-list');
+
+  const pdvsUnicos = [...new Set(entries.map(e=>e.pdv.trim()))].sort();
+  const curPdv = pdvSel.value;
+  pdvSel.innerHTML = `<option value="">Todos os PDVs</option>` + pdvsUnicos.map(p=>`<option value="${p}">${p}</option>`).join('');
+  pdvSel.value = curPdv;
+
+  pdvList.innerHTML = pdvsUnicos.map(p=>`<option value="${p}"></option>`).join('');
+
+  const marcasUnicas = [...new Set(entries.map(e=>e.marca))].sort();
+  const curMarca = marcaSel.value;
+  marcaSel.innerHTML = `<option value="">Todas as marcas</option>` + marcasUnicas.map(m=>`<option value="${m}">${m}</option>`).join('');
+  marcaSel.value = curMarca;
+}
+
+function renderTable(){
+  const el = document.getElementById('history-table');
+  let list = [...entries].sort((a,b)=> b.data.localeCompare(a.data));
+  if(filtroPdv) list = list.filter(e=> e.pdv.trim() === filtroPdv);
+  if(filtroMarca) list = list.filter(e=> e.marca === filtroMarca);
+
+  if(!list.length){
+    el.innerHTML = `<div class="empty">Nenhum lançamento encontrado.</div>`;
+    return;
+  }
+
+  let rows = list.map(e=>`
+    <tr>
+      <td class="mono">${fmtDate(e.data)}</td>
+      <td>${e.pdv}</td>
+      <td><span class="chip" style="background:${HEX[e.marca]||HEX['Outro']}">${e.marca}</span></td>
+      <td class="num mono">${e.qtd}</td>
+      <td class="num mono">${fmtBRL(e.valorUnit)}</td>
+      <td class="num mono">${fmtBRL(e.qtd*e.valorUnit)}</td>
+      <td class="no-print"><button class="btn-text" data-del="${e.id}">remover</button></td>
+    </tr>
+  `).join('');
+
+  el.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th><th>PDV</th><th>Marca</th><th class="num">Qtd</th><th class="num">Vl. unit.</th><th class="num">Total</th><th class="no-print"></th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  el.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      entries = entries.filter(e=> e.id !== btn.dataset.del);
+      await saveEntries();
+      renderAll();
+    });
+  });
+}
+
+function renderAll(){
+  renderCards();
+  renderShelf();
+  populateFilterOptions();
+  renderTable();
+}
+
+async function addEntry(){
+  const data = document.getElementById('f-data').value;
+  const pdv = document.getElementById('f-pdv').value.trim();
+  const marca = document.getElementById('f-marca').value;
+  const qtd = parseFloat(document.getElementById('f-qtd').value);
+  const valorUnit = parseFloat(document.getElementById('f-valor').value);
+
+  if(!data || !pdv || !qtd || qtd <= 0 || isNaN(valorUnit) || valorUnit < 0){
+    alert('Preencha data, PDV, quantidade e valor unitário corretamente.');
+    return;
+  }
+
+  entries.push({ id: uid(), data, pdv, marca, qtd, valorUnit });
+  await saveEntries();
+
+  document.getElementById('f-pdv').value = '';
+  document.getElementById('f-qtd').value = 1;
+  document.getElementById('f-valor').value = '';
+  updateTotalPreview();
+
+  renderAll();
+}
+
+async function resetAll(){
+  if(!confirm('Isso vai apagar todo o histórico de vendas salvo. Deseja continuar?')) return;
+  entries = [];
+  await saveEntries();
+  renderAll();
+}
+
+function bindEvents(){
+  document.getElementById('btn-add').addEventListener('click', addEntry);
+  document.getElementById('btn-reset').addEventListener('click', resetAll);
+  document.getElementById('btn-print').addEventListener('click', ()=> window.print());
+  document.getElementById('f-qtd').addEventListener('input', updateTotalPreview);
+  document.getElementById('f-valor').addEventListener('input', updateTotalPreview);
+  document.getElementById('filtro-pdv').addEventListener('change', (e)=>{ filtroPdv = e.target.value; renderTable(); });
+  document.getElementById('filtro-marca').addEventListener('change', (e)=>{ filtroMarca = e.target.value; renderTable(); });
+}
+
+(async function init(){
+  setHoje();
+  await loadEntries();
+  bindEvents();
+  updateTotalPreview();
+  renderAll();
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+})();
+</script>
+</body>
+</html>
