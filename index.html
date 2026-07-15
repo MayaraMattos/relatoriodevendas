@@ -19,14 +19,6 @@
     --white: #FFFFFF;
     --good: #2F8F5B;
     --bad: #C24444;
-
-    --c-optimum: #1F6F5C;
-    --c-whiskas: #E8752C;
-    --c-dreamies: #8B5CF6;
-    --c-biscrok: #D9A441;
-    --c-tasty: #E0604A;
-    --c-dentastix: #3E8FC1;
-    --c-outro: #8A8F98;
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -39,12 +31,11 @@
     min-height: 100vh;
   }
 
-  .wrap{ max-width: 1180px; margin: 0 auto; }
+  .wrap{ max-width: 1220px; margin: 0 auto; }
 
   h1,h2,h3, .display{ font-family: 'Space Grotesk', 'Inter', sans-serif; }
   .mono{ font-family: 'JetBrains Mono', monospace; }
 
-  /* ---------- Header ---------- */
   header{
     display:flex; align-items:center; justify-content:space-between;
     gap: 16px; padding-bottom: 22px; margin-bottom: 26px;
@@ -61,9 +52,8 @@
   #hoje{ font-size:13px; color:var(--slate); font-weight:500; }
   .header-right{ text-align:right; }
 
-  /* ---------- Layout ---------- */
-  .grid{ display:grid; grid-template-columns: 340px 1fr; gap: 24px; align-items:start; }
-  @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
+  .grid{ display:grid; grid-template-columns: 360px 1fr; gap: 24px; align-items:start; }
+  @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
 
   .panel{
     background: var(--white);
@@ -73,13 +63,15 @@
   }
   .panel + .panel{ margin-top: 20px; }
 
-  .panel h2{
-    font-size: 15px; font-weight:600; color: var(--navy);
-    margin-bottom: 4px;
-  }
+  .panel h2{ font-size: 15px; font-weight:600; color: var(--navy); margin-bottom: 4px; }
   .panel .sub{ font-size:12.5px; color:var(--slate); margin-bottom:16px; }
 
-  /* ---------- Form (nota de pedido style) ---------- */
+  .section-label{
+    font-size: 11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+    color: var(--navy); margin: 18px 0 10px; padding-top:14px; border-top: 1px dashed var(--line);
+  }
+  .section-label:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+
   .field{ margin-bottom: 14px; }
   .field label{
     display:block; font-size: 11.5px; font-weight:600; color: var(--slate);
@@ -90,10 +82,15 @@
     border: 1.5px solid var(--line); border-radius: 6px;
     background: var(--paper); color: var(--navy); font-family: inherit;
   }
-  .field input:focus, .field select:focus{
-    outline:none; border-color: var(--navy);
-  }
+  .field input:focus, .field select:focus{ outline:none; border-color: var(--navy); }
+  .field input:disabled{ opacity:.6; }
   .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  .cnpj-row{ display:flex; gap:8px; align-items:flex-end; }
+  .cnpj-row .field{ flex:1; margin-bottom:0; }
+  #cnpj-status{ font-size:11.5px; color:var(--slate); margin-top:6px; min-height:14px; }
+  #cnpj-status.ok{ color: var(--good); }
+  #cnpj-status.err{ color: var(--bad); }
+  #f-razao{ background: var(--paper-2); font-size:13px; color:var(--navy); font-weight:600; padding:9px 12px; border-radius:6px; border:1.5px dashed var(--line); min-height:18px; margin-bottom:14px; }
 
   .total-preview{
     display:flex; justify-content:space-between; align-items:baseline;
@@ -106,30 +103,25 @@
   button{ cursor:pointer; font-family:inherit; border:none; }
   .btn-primary{
     width:100%; padding: 12px; background: var(--yellow); color: var(--navy);
-    font-weight:700; font-size:14px; border-radius:6px;
-    transition: background .15s ease;
+    font-weight:700; font-size:14px; border-radius:6px; transition: background .15s ease;
   }
   .btn-primary:hover{ background: var(--yellow-deep); }
-  .btn-primary:disabled{ background:#EDE3C4; color:#A8A18A; cursor:not-allowed; }
-
+  .btn-secondary{
+    padding: 10px 14px; background: var(--navy); color: var(--white);
+    font-weight:600; font-size:13px; border-radius:6px; white-space:nowrap;
+  }
+  .btn-secondary:hover{ background: var(--navy-2); }
   .btn-ghost{
     padding: 9px 14px; background: transparent; color: var(--navy);
     font-weight:600; font-size:13px; border:1.5px solid var(--navy); border-radius:6px;
   }
   .btn-ghost:hover{ background: var(--navy); color: var(--white); }
-
-  .btn-text{
-    background:none; color:var(--slate); font-size:12.5px; text-decoration:underline;
-  }
+  .btn-text{ background:none; color:var(--slate); font-size:12.5px; text-decoration:underline; }
   .btn-text:hover{ color: var(--bad); }
 
-  /* ---------- Summary cards ---------- */
   .cards{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
   @media (max-width: 700px){ .cards{ grid-template-columns: repeat(2, 1fr); } }
-  .card{
-    background: var(--navy); color: var(--white);
-    border-radius: 10px; padding: 16px 18px;
-  }
+  .card{ background: var(--navy); color: var(--white); border-radius: 10px; padding: 16px 18px; }
   .card:nth-child(2){ background: var(--navy-2); }
   .card:nth-child(3){ background: var(--navy); }
   .card:nth-child(4){ background: var(--navy-2); }
@@ -137,17 +129,10 @@
   .card .v{ font-size: 21px; font-weight:700; font-family:'JetBrains Mono', monospace; }
   .card .v2{ font-size: 14px; font-weight:600; margin-top:2px; }
 
-  /* ---------- Shelf chart (signature) ---------- */
   .shelf-row{ margin-bottom: 16px; }
-  .shelf-label{
-    display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:6px;
-  }
+  .shelf-label{ display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:6px; }
   .shelf-label .val{ font-family:'JetBrains Mono', monospace; color: var(--slate); font-weight:500; font-size:12.5px; }
-  .shelf-bar{
-    position:relative; height: 22px; background: var(--paper-2);
-    border-radius: 3px; overflow:hidden; display:flex;
-    border-bottom: 3px solid var(--navy);
-  }
+  .shelf-bar{ position:relative; height: 22px; background: var(--paper-2); border-radius: 3px; overflow:hidden; display:flex; border-bottom: 3px solid var(--navy); }
   .shelf-seg{ height:100%; }
   .legend{ display:flex; flex-wrap:wrap; gap: 10px 18px; margin-top: 14px; padding-top:14px; border-top:1px solid var(--line); }
   .legend-item{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--slate); font-weight:500; }
@@ -155,28 +140,26 @@
 
   .empty{ padding: 30px 10px; text-align:center; color: var(--slate); font-size:13.5px; }
 
-  /* ---------- History table ---------- */
   .table-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
   .filters{ display:flex; gap:8px; flex-wrap:wrap; }
   .filters select, .filters input{
     padding:7px 10px; font-size:12.5px; border:1.5px solid var(--line); border-radius:6px; background:var(--paper); font-family:inherit; color:var(--navy);
   }
-  table{ width:100%; border-collapse: collapse; font-size: 13px; }
-  thead th{
-    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em;
-    color: var(--slate); font-weight:700; padding: 8px 10px; border-bottom: 1.5px solid var(--navy);
-  }
-  tbody td{ padding: 10px 10px; border-bottom: 1px solid var(--line); }
+  table{ width:100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th{ text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color: var(--slate); font-weight:700; padding: 8px 8px; border-bottom: 1.5px solid var(--navy); white-space:nowrap; }
+  tbody td{ padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align:top; }
   tbody tr:hover{ background: var(--paper-2); }
-  .chip{
-    display:inline-block; padding: 3px 9px; border-radius: 20px; font-size:11px; font-weight:700; color:var(--white);
-  }
+  .cliente-cell .nome{ font-weight:600; }
+  .cliente-cell .cnpj{ font-size:10.5px; color:var(--slate); }
+  .chip{ display:inline-block; padding: 3px 9px; border-radius: 20px; font-size:10.5px; font-weight:700; color:var(--white); white-space:nowrap; }
   .num{ font-family:'JetBrains Mono', monospace; text-align:right; }
   td.num, th.num{ text-align:right; }
+  .table-scroll{ overflow-x:auto; }
 
   .actions-bar{ display:flex; justify-content:space-between; align-items:center; margin-top:18px; gap:10px; flex-wrap:wrap; }
 
   #loading{ text-align:center; padding:60px 20px; color:var(--slate); font-size:14px; }
+  .hidden{ display:none !important; }
 
   @media print{
     body{ padding:0; background:white; }
@@ -227,24 +210,80 @@
           <input type="date" id="f-data">
         </div>
 
+        <div class="section-label">Cliente</div>
+
+        <div class="cnpj-row">
+          <div class="field">
+            <label for="f-cnpj">CNPJ do cliente</label>
+            <input type="text" id="f-cnpj" placeholder="00.000.000/0000-00" list="cnpj-list" maxlength="18">
+            <datalist id="cnpj-list"></datalist>
+          </div>
+          <button class="btn-secondary" id="btn-buscar-cnpj" type="button">Buscar</button>
+        </div>
+        <div id="cnpj-status"></div>
+        <div id="f-razao" class="hidden"></div>
+
         <div class="field">
-          <label for="f-pdv">PDV (pet shop)</label>
+          <label for="f-pdv">Nome do PDV (pet shop)</label>
           <input type="text" id="f-pdv" placeholder="Ex: Dog in Box" list="pdv-list" autocomplete="off">
           <datalist id="pdv-list"></datalist>
         </div>
 
-        <div class="field">
-          <label for="f-marca">Marca / SKU</label>
-          <select id="f-marca">
-            <option value="Optimum">Optimum</option>
-            <option value="Whiskas Temp">Whiskas Temp</option>
-            <option value="Dreamies">Dreamies</option>
-            <option value="Biscrok">Biscrok</option>
-            <option value="Tasty Bites">Tasty Bites</option>
-            <option value="Dentastix">Dentastix</option>
-            <option value="Outro">Outro</option>
-          </select>
+        <div class="section-label">Produto</div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="f-pet">Pet</label>
+            <select id="f-pet">
+              <option value="Cão">Cão</option>
+              <option value="Gato">Gato</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-tec">Tecnologia</label>
+            <select id="f-tec">
+              <option value="Petiscos">Petiscos</option>
+              <option value="Úmidos">Úmidos</option>
+              <option value="Secos">Secos</option>
+            </select>
+          </div>
         </div>
+
+        <div class="field">
+          <label for="f-produto">Produto / linha</label>
+          <select id="f-produto"></select>
+        </div>
+
+        <div id="produto-custom" class="hidden">
+          <div class="field">
+            <label for="f-marca-custom">Marca / linha (digite)</label>
+            <input type="text" id="f-marca-custom" placeholder="Ex: Pedigree Vital Pro">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field" id="wrap-sabor">
+            <label for="f-sabor">Sabor</label>
+            <select id="f-sabor"></select>
+          </div>
+          <div class="field" id="wrap-tamanho">
+            <label for="f-tamanho">Tamanho</label>
+            <select id="f-tamanho"></select>
+          </div>
+        </div>
+
+        <div id="sabor-tamanho-custom" class="row2 hidden">
+          <div class="field">
+            <label for="f-sabor-custom">Sabor (digite)</label>
+            <input type="text" id="f-sabor-custom" placeholder="Ex: Carne">
+          </div>
+          <div class="field">
+            <label for="f-tamanho-custom">Tamanho (digite)</label>
+            <input type="text" id="f-tamanho-custom" placeholder="Ex: 900g">
+          </div>
+        </div>
+
+        <div class="section-label">Quantidade e valor</div>
 
         <div class="row2">
           <div class="field">
@@ -281,10 +320,10 @@
             </div>
             <div class="filters no-print">
               <select id="filtro-pdv"><option value="">Todos os PDVs</option></select>
-              <select id="filtro-marca"><option value="">Todas as marcas</option></select>
+              <select id="filtro-produto"><option value="">Todos os produtos</option></select>
             </div>
           </div>
-          <div id="history-table"></div>
+          <div class="table-scroll" id="history-table"></div>
 
           <div class="actions-bar no-print">
             <button class="btn-text" id="btn-reset">Limpar todo o histórico</button>
@@ -297,46 +336,162 @@
 </div>
 
 <script>
-const BRAND_COLORS = {
-  'Optimum': 'var(--c-optimum)',
-  'Whiskas Temp': 'var(--c-whiskas)',
-  'Dreamies': 'var(--c-dreamies)',
-  'Biscrok': 'var(--c-biscrok)',
-  'Tasty Bites': 'var(--c-tasty)',
-  'Dentastix': 'var(--c-dentastix)',
-  'Outro': 'var(--c-outro)'
+/* ---------------- Catalogo de produtos (Guia de Bolso Mars 2025) ---------------- */
+const CATALOG = [
+  { id:'dentastix', pet:'Cão', tec:'Petiscos', marca:'Pedigree', linha:'Dentastix (Funcional)', flavors:['Tripla Ação'], sizes:['45g','110g','180g','270g'] },
+  { id:'tastybites', pet:'Cão', tec:'Petiscos', marca:'Pedigree', linha:'Tasty Bites (Recompensa)', flavors:['Carne','Leite','Frango'], sizes:['40g','80g','130g'] },
+  { id:'biscrok', pet:'Cão', tec:'Petiscos', marca:'Pedigree', linha:'Biscrok (Recompensa)', flavors:['Filhotes','Multi-sabor Adulto'], sizes:['150g','300g','500g','1kg'] },
+  { id:'marrobone', pet:'Cão', tec:'Petiscos', marca:'Pedigree', linha:'Marrobone (Ocupação)', flavors:['Original'], sizes:['200g','500g'] },
+  { id:'cesar', pet:'Cão', tec:'Úmidos', marca:'Cesar', linha:'Cesar Sachê (Super Premium)', flavors:['Filé Mignon','Carne Assada','Cordeiro','Frango Marinado'], sizes:['85g'] },
+  { id:'optimum_cao_umido', pet:'Cão', tec:'Úmidos', marca:'Optimum', linha:'Optimum Sachê (High Premium)', flavors:['Frango (Filhote)','Frango (Raças Pequenas)','Carne (Adulto)','Frango (Adulto)'], sizes:['100g'] },
+  { id:'pedigree_highprotein', pet:'Cão', tec:'Úmidos', marca:'Pedigree', linha:'High Protein Sachê (Premium)', flavors:['Carne e Frango','Porco e Carne'], sizes:['85g'] },
+  { id:'pedigree_sache', pet:'Cão', tec:'Úmidos', marca:'Pedigree', linha:'Sachê Pedigree (Premium)', flavors:['Carne','Frango','Cordeiro'], sizes:['100g'] },
+  { id:'pedigree_lata', pet:'Cão', tec:'Úmidos', marca:'Pedigree', linha:'Lata Pedigree (Manutenção)', flavors:['Carne e Frango','Carne','Frango'], sizes:['280g'] },
+  { id:'champ_umido', pet:'Cão', tec:'Úmidos', marca:'Champ', linha:'Champ Sachê (Manutenção)', flavors:['Frango','Carne'], sizes:['85g'] },
+  { id:'optimum_cao_seco', pet:'Cão', tec:'Secos', marca:'Optimum', linha:'Optimum Ração (High Premium)', flavors:['Filhotes Raças Pequenas','Filhotes Raças Médias e Grandes','Adultos Raças Pequenas','Adultos Raças Grandes'], sizes:['1kg','3kg','15kg','20kg'] },
+  { id:'pedigree_essencial', pet:'Cão', tec:'Secos', marca:'Pedigree', linha:'Nutrição Essencial (Premium)', flavors:['Carne e Frango','Carne e Vegetais','Ao Leite'], sizes:['900g','2,7kg','10,1kg'] },
+  { id:'champ_seco', pet:'Cão', tec:'Secos', marca:'Champ', linha:'Champ Ração (Manutenção)', flavors:['Carne e Cereal'], sizes:['900g','18kg'] },
+  { id:'sheba_petisco', pet:'Gato', tec:'Petiscos', marca:'Sheba', linha:'Petiscos Cremosos (Conexão)', flavors:['Atum','Atum & Camarão','Frango & Peixe Branco'], sizes:['2 unid.','4 unid.'] },
+  { id:'whiskas_petisco', pet:'Gato', tec:'Petiscos', marca:'Whiskas', linha:'Petiscos Whiskas (Funcional)', flavors:['Anti Bola de Pelo','Pelo Saudável'], sizes:['40g','80g'] },
+  { id:'dreamies', pet:'Gato', tec:'Petiscos', marca:'Dreamies', linha:'Dreamies (Recompensa)', flavors:['Carne','Frango','Salmão','Queijo'], sizes:['40g','80g','150g'] },
+  { id:'sheba_umido', pet:'Gato', tec:'Úmidos', marca:'Sheba', linha:'Sheba Sachê (Super Premium)', flavors:['Carne ao Molho','Atum Marinado','Frango Assado','Salmão ao Molho'], sizes:['85g'] },
+  { id:'optimum_gato_umido', pet:'Gato', tec:'Úmidos', marca:'Optimum', linha:'Optimum Sachê (High Premium)', flavors:['Frango (Filhote)','Frango (Manutenção de Peso)','Carne (Adultos)','Frango (Castrados)','Salmão (Castrados)'], sizes:['65g','85g'] },
+  { id:'whiskas_umido', pet:'Gato', tec:'Úmidos', marca:'Whiskas', linha:'Sachê Whiskas (Premium)', flavors:['Carne (Filhotes)','Frango (Filhotes)','Carne (Castrados)','Peixe (Castrados)','Carne','Cordeiro','Frango','Salmão','Atum'], sizes:['85g'] },
+  { id:'kitekat_umido', pet:'Gato', tec:'Úmidos', marca:'Kitekat', linha:'Kitekat Sachê (Manutenção)', flavors:['Carne','Frango','Peixe'], sizes:['70g'] },
+  { id:'whiskas_lata', pet:'Gato', tec:'Úmidos', marca:'Whiskas', linha:'Lata Whiskas (Manutenção)', flavors:['Carne','Frango','Atum','Peixe'], sizes:['290g'] },
+  { id:'optimum_gato_seco', pet:'Gato', tec:'Secos', marca:'Optimum', linha:'Optimum Ração (High Premium)', flavors:['Frango (Filhotes)','Carne (Filhotes)','Frango (Adultos)','Carne (Adultos)'], sizes:['1kg','3kg','10,1kg'] },
+  { id:'whiskas_natureza', pet:'Gato', tec:'Secos', marca:'Whiskas', linha:'Melhor por Natureza (Super Premium)', flavors:['Frango','Salmão'], sizes:['2,7kg'] },
+  { id:'whiskas_seco', pet:'Gato', tec:'Secos', marca:'Whiskas', linha:'Ração Whiskas (Premium)', flavors:['Carne e Leite (Filhotes)','Carne (Castrados)','Peixe (Castrados)','Carne','Mix de Carnes','Frango','Peixe'], sizes:['500g','2,7kg'] },
+  { id:'kitekat_seco', pet:'Gato', tec:'Secos', marca:'Kitekat', linha:'Ração Kitekat (Manutenção)', flavors:['Mix de Carnes'], sizes:['900g','2,7kg'] },
+];
+const OUTRO_ID = 'outro';
+
+const BRAND_HEX = {
+  'Pedigree':'#1F6F5C', 'Cesar':'#8B5CF6', 'Champ':'#D9A441', 'Optimum':'#3E8FC1',
+  'Sheba':'#0F1E3D', 'Whiskas':'#E8752C', 'Kitekat':'#2F8F5B', 'Dreamies':'#C24444', 'Outro':'#8A8F98'
 };
-const HEX = {
-  'Optimum': '#1F6F5C','Whiskas Temp':'#E8752C','Dreamies':'#8B5CF6',
-  'Biscrok':'#D9A441','Tasty Bites':'#E0604A','Dentastix':'#3E8FC1','Outro':'#8A8F98'
-};
+function brandColor(marca){
+  if(BRAND_HEX[marca]) return BRAND_HEX[marca];
+  let hash = 0;
+  for(let i=0;i<marca.length;i++){ hash = marca.charCodeAt(i) + ((hash<<5)-hash); }
+  const hue = Math.abs(hash) % 360;
+  return 'hsl(' + hue + ', 55%, 42%)';
+}
 
 let entries = [];
+let clientesCache = {};
 let filtroPdv = '';
-let filtroMarca = '';
+let filtroProduto = '';
 
-function fmtBRL(n){
-  return n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-}
-function fmtDate(iso){
-  const [y,m,d] = iso.split('-');
-  return `${d}/${m}/${y}`;
-}
+function fmtBRL(n){ return n.toLocaleString('pt-BR', { style:'currency', currency:'BRL' }); }
+function fmtDate(iso){ const parts = iso.split('-'); return parts[2] + '/' + parts[1] + '/' + parts[0]; }
 function uid(){ return 'e' + Date.now() + Math.random().toString(16).slice(2,7); }
 
-async function loadEntries(){
+async function loadAll(){
   try{
     const raw = localStorage.getItem('vendas:entries');
     entries = raw ? JSON.parse(raw) : [];
-  }catch(err){
-    entries = [];
-  }
+  }catch(err){ entries = []; }
+  try{
+    const rawC = localStorage.getItem('vendas:clientes');
+    clientesCache = rawC ? JSON.parse(rawC) : {};
+  }catch(err){ clientesCache = {}; }
 }
 async function saveEntries(){
+  try{ localStorage.setItem('vendas:entries', JSON.stringify(entries)); }
+  catch(err){ console.error('Erro ao salvar vendas', err); }
+}
+async function saveClientes(){
+  try{ localStorage.setItem('vendas:clientes', JSON.stringify(clientesCache)); }
+  catch(err){ console.error('Erro ao salvar clientes', err); }
+}
+
+function maskCNPJ(v){
+  v = v.replace(/\D/g,'').slice(0,14);
+  v = v.replace(/^(\d{2})(\d)/,'$1.$2');
+  v = v.replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3');
+  v = v.replace(/\.(\d{3})(\d)/,'.$1/$2');
+  v = v.replace(/(\d{4})(\d)/,'$1-$2');
+  return v;
+}
+async function buscarCNPJ(){
+  const input = document.getElementById('f-cnpj');
+  const digits = input.value.replace(/\D/g,'');
+  const statusEl = document.getElementById('cnpj-status');
+  const razaoEl = document.getElementById('f-razao');
+  statusEl.className = ''; razaoEl.classList.add('hidden');
+
+  if(digits.length !== 14){
+    statusEl.textContent = 'Digite um CNPJ válido (14 dígitos).';
+    statusEl.className = 'err';
+    return;
+  }
+  if(clientesCache[digits]){
+    const c = clientesCache[digits];
+    razaoEl.textContent = c.razao;
+    razaoEl.classList.remove('hidden');
+    statusEl.textContent = c.fantasia ? ('Nome fantasia: ' + c.fantasia) : 'Encontrado (em cache)';
+    statusEl.className = 'ok';
+    if(!document.getElementById('f-pdv').value) document.getElementById('f-pdv').value = c.fantasia || c.razao;
+    return;
+  }
+
+  statusEl.textContent = 'Buscando...';
   try{
-    localStorage.setItem('vendas:entries', JSON.stringify(entries));
+    const resp = await fetch('https://brasilapi.com.br/api/cnpj/v1/' + digits);
+    if(!resp.ok) throw new Error('nao encontrado');
+    const data = await resp.json();
+    const razao = data.razao_social || '';
+    const fantasia = data.nome_fantasia || '';
+    razaoEl.textContent = razao;
+    razaoEl.classList.remove('hidden');
+    statusEl.textContent = fantasia ? ('Nome fantasia: ' + fantasia) : 'Encontrado';
+    statusEl.className = 'ok';
+    if(!document.getElementById('f-pdv').value) document.getElementById('f-pdv').value = fantasia || razao;
+    clientesCache[digits] = { razao: razao, fantasia: fantasia };
+    await saveClientes();
+    populateCnpjList();
   }catch(err){
-    console.error('Erro ao salvar', err);
+    statusEl.textContent = 'CNPJ não encontrado. Confira o número ou preencha o PDV manualmente.';
+    statusEl.className = 'err';
+  }
+}
+function populateCnpjList(){
+  const dl = document.getElementById('cnpj-list');
+  dl.innerHTML = Object.keys(clientesCache).map(function(c){ return '<option value="' + maskCNPJ(c) + '"></option>'; }).join('');
+}
+
+function populateProdutos(){
+  const pet = document.getElementById('f-pet').value;
+  const tec = document.getElementById('f-tec').value;
+  const sel = document.getElementById('f-produto');
+  const opts = CATALOG.filter(function(p){ return p.pet === pet && p.tec === tec; });
+  sel.innerHTML = opts.map(function(p){ return '<option value="' + p.id + '">' + p.marca + ' — ' + p.linha + '</option>'; }).join('')
+    + '<option value="' + OUTRO_ID + '">Outro / não listado</option>';
+  onProdutoChange();
+}
+function onProdutoChange(){
+  const id = document.getElementById('f-produto').value;
+  const customWrap = document.getElementById('produto-custom');
+  const saborTamanhoCustom = document.getElementById('sabor-tamanho-custom');
+  const wrapSabor = document.getElementById('wrap-sabor');
+  const wrapTamanho = document.getElementById('wrap-tamanho');
+
+  if(id === OUTRO_ID){
+    customWrap.classList.remove('hidden');
+    saborTamanhoCustom.classList.remove('hidden');
+    wrapSabor.classList.add('hidden');
+    wrapTamanho.classList.add('hidden');
+  }else{
+    customWrap.classList.add('hidden');
+    saborTamanhoCustom.classList.add('hidden');
+    wrapSabor.classList.remove('hidden');
+    wrapTamanho.classList.remove('hidden');
+    const item = CATALOG.find(function(p){ return p.id === id; });
+    if(item){
+      document.getElementById('f-sabor').innerHTML = item.flavors.map(function(f){ return '<option value="' + f + '">' + f + '</option>'; }).join('');
+      document.getElementById('f-tamanho').innerHTML = item.sizes.map(function(s){ return '<option value="' + s + '">' + s + '</option>'; }).join('');
+    }
   }
 }
 
@@ -345,150 +500,127 @@ function setHoje(){
   document.getElementById('hoje').textContent = hoje.toLocaleDateString('pt-BR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
   document.getElementById('f-data').value = hoje.toISOString().slice(0,10);
 }
-
 function updateTotalPreview(){
   const qtd = parseFloat(document.getElementById('f-qtd').value) || 0;
   const valor = parseFloat(document.getElementById('f-valor').value) || 0;
   document.getElementById('f-total').textContent = fmtBRL(qtd * valor);
 }
-
 function renderCards(){
-  const totalVendido = entries.reduce((s,e)=> s + e.qtd*e.valorUnit, 0);
-  const pdvsUnicos = new Set(entries.map(e=>e.pdv.trim().toLowerCase())).size;
+  const totalVendido = entries.reduce(function(s,e){ return s + e.qtd*e.valorUnit; }, 0);
+  const pdvsUnicos = new Set(entries.map(function(e){ return (e.pdv||'').trim().toLowerCase(); })).size;
   const ticketMedio = entries.length ? totalVendido / entries.length : 0;
 
   const porMarca = {};
-  entries.forEach(e=>{ porMarca[e.marca] = (porMarca[e.marca]||0) + e.qtd*e.valorUnit; });
-  let marcaTop = '—';
-  let maxVal = -1;
-  Object.entries(porMarca).forEach(([m,v])=>{ if(v>maxVal){ maxVal=v; marcaTop=m; } });
+  entries.forEach(function(e){ const m = e.marca || 'Outro'; porMarca[m] = (porMarca[m]||0) + e.qtd*e.valorUnit; });
+  let marcaTop = '—', maxVal = -1;
+  Object.entries(porMarca).forEach(function(entry){ if(entry[1]>maxVal){ maxVal=entry[1]; marcaTop=entry[0]; } });
 
-  document.getElementById('cards').innerHTML = `
-    <div class="card">
-      <div class="k">Total vendido</div>
-      <div class="v">${fmtBRL(totalVendido)}</div>
-    </div>
-    <div class="card">
-      <div class="k">Ticket médio</div>
-      <div class="v">${fmtBRL(ticketMedio)}</div>
-    </div>
-    <div class="card">
-      <div class="k">PDVs positivados</div>
-      <div class="v">${pdvsUnicos}</div>
-    </div>
-    <div class="card">
-      <div class="k">Marca destaque</div>
-      <div class="v2" style="font-family:'Space Grotesk',sans-serif;">${marcaTop}</div>
-    </div>
-  `;
+  document.getElementById('cards').innerHTML =
+    '<div class="card"><div class="k">Total vendido</div><div class="v">' + fmtBRL(totalVendido) + '</div></div>' +
+    '<div class="card"><div class="k">Ticket médio</div><div class="v">' + fmtBRL(ticketMedio) + '</div></div>' +
+    '<div class="card"><div class="k">PDVs positivados</div><div class="v">' + pdvsUnicos + '</div></div>' +
+    '<div class="card"><div class="k">Marca destaque</div><div class="v2" style="font-family:\'Space Grotesk\',sans-serif;">' + marcaTop + '</div></div>';
 }
-
 function renderShelf(){
   const el = document.getElementById('shelf-chart');
   if(!entries.length){
-    el.innerHTML = `<div class="empty">Nenhuma venda registrada ainda. Adicione a primeira ao lado.</div>`;
+    el.innerHTML = '<div class="empty">Nenhuma venda registrada ainda. Adicione a primeira ao lado.</div>';
     return;
   }
   const byPdv = {};
-  entries.forEach(e=>{
-    const key = e.pdv.trim();
+  entries.forEach(function(e){
+    const key = (e.pdv||'Sem nome').trim();
     if(!byPdv[key]) byPdv[key] = {};
-    byPdv[key][e.marca] = (byPdv[key][e.marca]||0) + e.qtd*e.valorUnit;
+    const m = e.marca || 'Outro';
+    byPdv[key][m] = (byPdv[key][m]||0) + e.qtd*e.valorUnit;
   });
-  const pdvTotals = Object.entries(byPdv).map(([pdv,marcas])=>{
-    const total = Object.values(marcas).reduce((a,b)=>a+b,0);
-    return { pdv, marcas, total };
-  }).sort((a,b)=> b.total - a.total);
+  const pdvTotals = Object.entries(byPdv).map(function(entry){
+    const pdv = entry[0], marcas = entry[1];
+    const total = Object.values(marcas).reduce(function(a,b){ return a+b; },0);
+    return { pdv: pdv, marcas: marcas, total: total };
+  }).sort(function(a,b){ return b.total - a.total; });
 
-  const maxTotal = Math.max(...pdvTotals.map(p=>p.total));
+  const maxTotal = Math.max.apply(null, pdvTotals.map(function(p){ return p.total; }));
+  const marcasUsadas = new Set();
 
   let html = '';
-  pdvTotals.forEach(p=>{
+  pdvTotals.forEach(function(p){
     const widthPct = maxTotal ? (p.total / maxTotal * 100) : 0;
     let segs = '';
-    Object.entries(p.marcas).forEach(([marca, val])=>{
+    Object.entries(p.marcas).forEach(function(entry){
+      const marca = entry[0], val = entry[1];
+      marcasUsadas.add(marca);
       const segPct = p.total ? (val / p.total * 100) : 0;
-      segs += `<div class="shelf-seg" style="width:${segPct}%; background:${HEX[marca]||HEX['Outro']};" title="${marca}: ${fmtBRL(val)}"></div>`;
+      segs += '<div class="shelf-seg" style="width:' + segPct + '%; background:' + brandColor(marca) + ';" title="' + marca + ': ' + fmtBRL(val) + '"></div>';
     });
-    html += `
-      <div class="shelf-row">
-        <div class="shelf-label">
-          <span>${p.pdv}</span>
-          <span class="val">${fmtBRL(p.total)}</span>
-        </div>
-        <div class="shelf-bar" style="width:${Math.max(widthPct,8)}%;">${segs}</div>
-      </div>
-    `;
+    html += '<div class="shelf-row">' +
+      '<div class="shelf-label"><span>' + p.pdv + '</span><span class="val">' + fmtBRL(p.total) + '</span></div>' +
+      '<div class="shelf-bar" style="width:' + Math.max(widthPct,8) + '%;">' + segs + '</div></div>';
   });
 
-  html += `<div class="legend">` + Object.keys(HEX).map(m=>
-    `<div class="legend-item"><span class="legend-dot" style="background:${HEX[m]};"></span>${m}</div>`
-  ).join('') + `</div>`;
+  html += '<div class="legend">' + Array.from(marcasUsadas).sort().map(function(m){
+    return '<div class="legend-item"><span class="legend-dot" style="background:' + brandColor(m) + ';"></span>' + m + '</div>';
+  }).join('') + '</div>';
 
   el.innerHTML = html;
 }
-
 function populateFilterOptions(){
   const pdvSel = document.getElementById('filtro-pdv');
-  const marcaSel = document.getElementById('filtro-marca');
+  const produtoSel = document.getElementById('filtro-produto');
   const pdvList = document.getElementById('pdv-list');
 
-  const pdvsUnicos = [...new Set(entries.map(e=>e.pdv.trim()))].sort();
+  const pdvsUnicos = Array.from(new Set(entries.map(function(e){ return (e.pdv||'').trim(); }).filter(Boolean))).sort();
   const curPdv = pdvSel.value;
-  pdvSel.innerHTML = `<option value="">Todos os PDVs</option>` + pdvsUnicos.map(p=>`<option value="${p}">${p}</option>`).join('');
+  pdvSel.innerHTML = '<option value="">Todos os PDVs</option>' + pdvsUnicos.map(function(p){ return '<option value="' + p + '">' + p + '</option>'; }).join('');
   pdvSel.value = curPdv;
+  pdvList.innerHTML = pdvsUnicos.map(function(p){ return '<option value="' + p + '"></option>'; }).join('');
 
-  pdvList.innerHTML = pdvsUnicos.map(p=>`<option value="${p}"></option>`).join('');
+  const produtosUnicos = Array.from(new Set(entries.map(function(e){ return e.linha || e.marca || ''; }).filter(Boolean))).sort();
+  const curProduto = produtoSel.value;
+  produtoSel.innerHTML = '<option value="">Todos os produtos</option>' + produtosUnicos.map(function(p){ return '<option value="' + p + '">' + p + '</option>'; }).join('');
+  produtoSel.value = curProduto;
 
-  const marcasUnicas = [...new Set(entries.map(e=>e.marca))].sort();
-  const curMarca = marcaSel.value;
-  marcaSel.innerHTML = `<option value="">Todas as marcas</option>` + marcasUnicas.map(m=>`<option value="${m}">${m}</option>`).join('');
-  marcaSel.value = curMarca;
+  populateCnpjList();
 }
-
 function renderTable(){
   const el = document.getElementById('history-table');
-  let list = [...entries].sort((a,b)=> b.data.localeCompare(a.data));
-  if(filtroPdv) list = list.filter(e=> e.pdv.trim() === filtroPdv);
-  if(filtroMarca) list = list.filter(e=> e.marca === filtroMarca);
+  let list = entries.slice().sort(function(a,b){ return (b.data||'').localeCompare(a.data||''); });
+  if(filtroPdv) list = list.filter(function(e){ return (e.pdv||'').trim() === filtroPdv; });
+  if(filtroProduto) list = list.filter(function(e){ return (e.linha||e.marca||'') === filtroProduto; });
 
   if(!list.length){
-    el.innerHTML = `<div class="empty">Nenhum lançamento encontrado.</div>`;
+    el.innerHTML = '<div class="empty">Nenhum lançamento encontrado.</div>';
     return;
   }
 
-  let rows = list.map(e=>`
-    <tr>
-      <td class="mono">${fmtDate(e.data)}</td>
-      <td>${e.pdv}</td>
-      <td><span class="chip" style="background:${HEX[e.marca]||HEX['Outro']}">${e.marca}</span></td>
-      <td class="num mono">${e.qtd}</td>
-      <td class="num mono">${fmtBRL(e.valorUnit)}</td>
-      <td class="num mono">${fmtBRL(e.qtd*e.valorUnit)}</td>
-      <td class="no-print"><button class="btn-text" data-del="${e.id}">remover</button></td>
-    </tr>
-  `).join('');
+  let rows = list.map(function(e){
+    return '<tr>' +
+      '<td class="mono">' + (e.data ? fmtDate(e.data) : '—') + '</td>' +
+      '<td class="cliente-cell"><div class="nome">' + (e.pdv || '—') + '</div><div class="cnpj">' + (e.cnpj ? maskCNPJ(e.cnpj) : '') + '</div></td>' +
+      '<td><span class="chip" style="background:' + brandColor(e.marca||'Outro') + '">' + (e.marca||'Outro') + '</span></td>' +
+      '<td>' + (e.linha || '—') + '</td>' +
+      '<td>' + (e.sabor || '—') + '</td>' +
+      '<td>' + (e.tamanho || '—') + '</td>' +
+      '<td class="num mono">' + e.qtd + '</td>' +
+      '<td class="num mono">' + fmtBRL(e.valorUnit) + '</td>' +
+      '<td class="num mono">' + fmtBRL(e.qtd*e.valorUnit) + '</td>' +
+      '<td class="no-print"><button class="btn-text" data-del="' + e.id + '">remover</button></td>' +
+      '</tr>';
+  }).join('');
 
-  el.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th><th>PDV</th><th>Marca</th><th class="num">Qtd</th><th class="num">Vl. unit.</th><th class="num">Total</th><th class="no-print"></th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
+  el.innerHTML = '<table><thead><tr>' +
+    '<th>Data</th><th>Cliente</th><th>Marca</th><th>Produto</th><th>Sabor</th><th>Tamanho</th>' +
+    '<th class="num">Qtd</th><th class="num">Vl. unit.</th><th class="num">Total</th><th class="no-print"></th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
 
-  el.querySelectorAll('[data-del]').forEach(btn=>{
-    btn.addEventListener('click', async ()=>{
-      entries = entries.filter(e=> e.id !== btn.dataset.del);
+  el.querySelectorAll('[data-del]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      entries = entries.filter(function(e){ return e.id !== btn.dataset.del; });
       await saveEntries();
       renderAll();
     });
   });
 }
-
 function renderAll(){
   renderCards();
   renderShelf();
@@ -498,27 +630,54 @@ function renderAll(){
 
 async function addEntry(){
   const data = document.getElementById('f-data').value;
+  const cnpjDigits = document.getElementById('f-cnpj').value.replace(/\D/g,'');
   const pdv = document.getElementById('f-pdv').value.trim();
-  const marca = document.getElementById('f-marca').value;
+  const razaoSocial = document.getElementById('f-razao').textContent || '';
+  const pet = document.getElementById('f-pet').value;
+  const tec = document.getElementById('f-tec').value;
+  const produtoId = document.getElementById('f-produto').value;
   const qtd = parseFloat(document.getElementById('f-qtd').value);
   const valorUnit = parseFloat(document.getElementById('f-valor').value);
+
+  let marca, linha, sabor, tamanho;
+  if(produtoId === OUTRO_ID){
+    marca = document.getElementById('f-marca-custom').value.trim() || 'Outro';
+    linha = marca;
+    sabor = document.getElementById('f-sabor-custom').value.trim();
+    tamanho = document.getElementById('f-tamanho-custom').value.trim();
+  }else{
+    const item = CATALOG.find(function(p){ return p.id===produtoId; });
+    marca = item ? item.marca : 'Outro';
+    linha = item ? item.linha : '';
+    sabor = document.getElementById('f-sabor').value;
+    tamanho = document.getElementById('f-tamanho').value;
+  }
 
   if(!data || !pdv || !qtd || qtd <= 0 || isNaN(valorUnit) || valorUnit < 0){
     alert('Preencha data, PDV, quantidade e valor unitário corretamente.');
     return;
   }
 
-  entries.push({ id: uid(), data, pdv, marca, qtd, valorUnit });
+  entries.push({
+    id: uid(), data: data, cnpj: cnpjDigits, razaoSocial: razaoSocial, pdv: pdv,
+    pet: pet, tec: tec, marca: marca, linha: linha, sabor: sabor, tamanho: tamanho, qtd: qtd, valorUnit: valorUnit
+  });
   await saveEntries();
 
+  document.getElementById('f-cnpj').value = '';
+  document.getElementById('f-razao').textContent = '';
+  document.getElementById('f-razao').classList.add('hidden');
+  document.getElementById('cnpj-status').textContent = '';
   document.getElementById('f-pdv').value = '';
+  document.getElementById('f-marca-custom').value = '';
+  document.getElementById('f-sabor-custom').value = '';
+  document.getElementById('f-tamanho-custom').value = '';
   document.getElementById('f-qtd').value = 1;
   document.getElementById('f-valor').value = '';
   updateTotalPreview();
 
   renderAll();
 }
-
 async function resetAll(){
   if(!confirm('Isso vai apagar todo o histórico de vendas salvo. Deseja continuar?')) return;
   entries = [];
@@ -529,17 +688,25 @@ async function resetAll(){
 function bindEvents(){
   document.getElementById('btn-add').addEventListener('click', addEntry);
   document.getElementById('btn-reset').addEventListener('click', resetAll);
-  document.getElementById('btn-print').addEventListener('click', ()=> window.print());
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+  document.getElementById('btn-buscar-cnpj').addEventListener('click', buscarCNPJ);
+  document.getElementById('f-cnpj').addEventListener('input', function(e){ e.target.value = maskCNPJ(e.target.value); });
+  document.getElementById('f-cnpj').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); buscarCNPJ(); } });
   document.getElementById('f-qtd').addEventListener('input', updateTotalPreview);
   document.getElementById('f-valor').addEventListener('input', updateTotalPreview);
-  document.getElementById('filtro-pdv').addEventListener('change', (e)=>{ filtroPdv = e.target.value; renderTable(); });
-  document.getElementById('filtro-marca').addEventListener('change', (e)=>{ filtroMarca = e.target.value; renderTable(); });
+  document.getElementById('f-pet').addEventListener('change', populateProdutos);
+  document.getElementById('f-tec').addEventListener('change', populateProdutos);
+  document.getElementById('f-produto').addEventListener('change', onProdutoChange);
+  document.getElementById('filtro-pdv').addEventListener('change', function(e){ filtroPdv = e.target.value; renderTable(); });
+  document.getElementById('filtro-produto').addEventListener('change', function(e){ filtroProduto = e.target.value; renderTable(); });
 }
 
 (async function init(){
   setHoje();
-  await loadEntries();
+  await loadAll();
   bindEvents();
+  populateProdutos();
+  populateCnpjList();
   updateTotalPreview();
   renderAll();
   document.getElementById('loading').style.display = 'none';
